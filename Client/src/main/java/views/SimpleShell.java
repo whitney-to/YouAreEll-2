@@ -18,7 +18,10 @@ public class SimpleShell {
 
     public static void prettyPrint(String output) {
         // yep, make an effort to format things nicely, eh?
-        System.out.println(output);
+        String[] strs = output.split(",");
+        for (String s: strs) {
+            System.out.println(s);
+        }
     }
     public static void main(String[] args) throws java.io.IOException {
 

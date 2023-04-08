@@ -10,24 +10,19 @@ public class YouAreEll {
         this.transactionController = transactionController;
     }
 
-    public static void main(String[] args) {
-        // hmm: is this Dependency Injection?
-        YouAreEll urlhandler = new YouAreEll(new TransactionController(new MessageController(), new IdController()));
-        System.out.println(urlhandler.MakeURLCall("/ids", "GET", ""));
-        System.out.println(urlhandler.MakeURLCall("/messages", "GET", ""));
-    }
-
-    private String MakeURLCall(String endPath, String httpMethod, String message) {
-
-        return null;
-    }
+//    public static void main(String[] args) {
+//        // hmm: is this Dependency Injection?
+//        YouAreEll urlhandler = new YouAreEll(new TransactionController(new MessageController(), new IdController()));
+//        System.out.println(urlhandler.MakeURLCall("/ids", "GET", ""));
+//        System.out.println(urlhandler.MakeURLCall("/messages", "GET", ""));
+//    }
 
     public String get_ids() {
-        return transactionController.makecall("/ids", "GET", "");
+        return transactionController.makeURLCall("/ids", "GET", "");
     }
 
     public String get_messages() {
-        return MakeURLCall("/messages", "GET", "");
+        return transactionController.makeURLCall("/messages", "GET", "");
     }
 
 
