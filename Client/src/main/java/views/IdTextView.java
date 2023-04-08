@@ -8,7 +8,8 @@ public class IdTextView {
     public IdTextView(Id idToDisplay) {
         this.id = idToDisplay;
     }
-    @Override public String toString() {
+    @Override
+    public String toString() {
         return this.id.toString();
     } 
 }

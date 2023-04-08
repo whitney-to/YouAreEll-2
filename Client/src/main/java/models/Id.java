@@ -8,15 +8,18 @@ public class Id {
     private String name = "";
     private String github = "";
 
-    public Id (String name, String githubId) {}
+    public Id (String name, String githubId) {
+        // assign these field???
+        this.name = name;
+    }
 
     public String getUid() {
         return uid;
     }
 
-//    public void setUid(String uid) {
-//        this.uid = uid;
-//    }
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
 
     public String getName() {
         return name;
