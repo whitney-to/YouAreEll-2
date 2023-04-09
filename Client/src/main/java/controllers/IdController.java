@@ -16,7 +16,7 @@ import org.json.JSONObject;
 public class IdController {
     private String rootURL = "http://zipcode.rocks:8085/ids";
 
-    private HashMap<String, Id> allIds;
+    private HashMap<String, Id> allIds; // githubID , Id
 
     Id myId;
 
@@ -25,7 +25,7 @@ public class IdController {
                 .uri(URI.create(rootURL))
                 .method("GET", HttpRequest.BodyPublishers.noBody())
                 .build();
-        HttpResponse<String> response = null;
+        HttpResponse<String> response;
         try {
             response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
             String result = response.body();
@@ -51,10 +51,21 @@ public class IdController {
     }
 
     public Id postId(Id id) {
-        // create json from id
-        // call server, get json result Or error
-        // result json to Id obj
-
+        String jsonString = String.format("{\"userid\" : \"%s\",\"name\" : \"%s\",\"github\" : \"%s\"}",
+                "-",id.getName(),id.getGithub());
+        //JSONObject json = new JSONObject(jsonString);
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(rootURL))
+                .method("POST", HttpRequest.BodyPublishers.ofString(jsonString))
+                .build();
+        HttpResponse<String> response;
+        try {
+            response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+            JSONObject json = new JSONObject(response.body());
+            return new Id(json.getString("userid"),json.getString("name"),json.getString("github"));
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 

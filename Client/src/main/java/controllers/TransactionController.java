@@ -36,7 +36,7 @@ public class TransactionController {
     // CREATED THIS METHOD
     // httpMethod =>  GET POST PUT
 
-    public String makeURLCall(String endPath, String httpMethod, String msg) {
+    public String makeURLCall(String endPath, String httpMethod, String jsonStr) {
         switch(httpMethod){
             case "GET":
                 if(endPath.contains("ids")){
@@ -48,7 +48,8 @@ public class TransactionController {
                 break;
             case "POST":
                 if(endPath.contains("ids")){
-                    //idCtrl.postId();
+                    String[] idInfo = jsonStr.split(",");
+                    return idCtrl.postId(new Id("",idInfo[0],idInfo[1])).toString();
                 } else if(endPath.contains("messages")){
                     //msgCtrl.getMessages();
                 }

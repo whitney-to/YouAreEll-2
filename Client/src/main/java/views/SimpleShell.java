@@ -71,9 +71,16 @@ public class SimpleShell {
 
                 // Specific Commands.
 
-                // ids
-                if (list.contains("ids")) {
+                // ids get
+                if (list.contains("ids") && list.size()==1) {
                     String results = youAreEll.get_ids();
+                    SimpleShell.prettyPrint(results);
+                    continue;
+                }
+
+                // ids post
+                if (list.contains("ids") && list.size()==3) {
+                    String results = youAreEll.post_ids(list.get(1),list.get(2));
                     SimpleShell.prettyPrint(results);
                     continue;
                 }

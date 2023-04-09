@@ -1,6 +1,7 @@
 package youareell;
 
 import controllers.*;
+import models.Id;
 
 public class YouAreEll {
 
@@ -25,5 +26,9 @@ public class YouAreEll {
         return transactionController.makeURLCall("/messages", "GET", "");
     }
 
+    public String post_ids(String name, String github) {
+        String s = String.format("%s,%s",name,github);
+        return transactionController.makeURLCall("/ids", "POST", s);
+    }
 
 }
