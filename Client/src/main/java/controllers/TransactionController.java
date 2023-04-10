@@ -28,7 +28,7 @@ public class TransactionController {
         return null;
     }
     public String postId(String idToRegister, String githubName) {
-        Id tid = new Id("",idToRegister, githubName);
+        Id tid = new Id(idToRegister, githubName);
         tid = idCtrl.postId(tid);
         return ("Id registered.");
     }
@@ -43,13 +43,13 @@ public class TransactionController {
                     ArrayList<Id> ids = idCtrl.getIds();
                     return ids.toString();
                 } else if(endPath.contains("messages")){
-                    msgCtrl.getMessages();
+                    return msgCtrl.getMessages().toString();
                 }
                 break;
             case "POST":
                 if(endPath.contains("ids")){
                     String[] idInfo = jsonStr.split(",");
-                    return idCtrl.postId(new Id("",idInfo[0],idInfo[1])).toString();
+                    return idCtrl.postId(new Id(idInfo[0],idInfo[1])).toString();
                 } else if(endPath.contains("messages")){
                     //msgCtrl.getMessages();
                 }

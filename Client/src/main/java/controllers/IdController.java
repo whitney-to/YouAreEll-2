@@ -42,7 +42,7 @@ public class IdController {
             String name = json.getString("name");
             String id = json.getString("userid");
             String github = json.getString("github");
-            ids.add(new Id(id,name,github));
+            ids.add(new Id(name,github));
         }
         return ids;
     }
@@ -61,7 +61,7 @@ public class IdController {
                 HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
                 JSONObject json = new JSONObject(response.body());
                 ids = getIds();
-                return new Id(json.getString("userid"),json.getString("name"),json.getString("github"));
+                return new Id(json.getString("name"),json.getString("github"));
             } catch (IOException | InterruptedException e) {
                 e.printStackTrace();
             }
@@ -75,7 +75,7 @@ public class IdController {
             HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
             JSONObject json = new JSONObject(response.body());
             ids = getIds();
-            return new Id(json.getString("userid"),json.getString("name"),json.getString("github"));
+            return new Id(json.getString("name"),json.getString("github"));
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }

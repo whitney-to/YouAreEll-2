@@ -10,6 +10,8 @@ import java.util.List;
 import controllers.IdController;
 import controllers.MessageController;
 import controllers.TransactionController;
+import models.Id;
+import models.Message;
 import youareell.YouAreEll;
 
 // Simple Shell is a Console view for youareell.YouAreEll.
@@ -43,7 +45,9 @@ public class SimpleShell {
 
             //input parsed into array of strings(command and arguments)
             String[] commands = commandLine.split(" ");
+            String[] message = commandLine.split("'");
             List<String> list = new ArrayList<String>();
+            List<String> msgList = new ArrayList<>();
 
             //if the user entered a return, just loop again
             if (commandLine.equals(""))
@@ -59,6 +63,11 @@ public class SimpleShell {
                 list.add(commands[i]);
 
             }
+
+            for (int j = 0; j < message.length; j++) {
+                msgList.add(message[j]);
+            }
+
             System.out.print(list); //***check to see if list was added correctly***
             history.addAll(list);
             try {
@@ -86,11 +95,53 @@ public class SimpleShell {
                 }
 
                 // messages
-                if (list.contains("messages")) {
+                if (list.contains("messages")&& list.size()==1) {
                     String results = youAreEll.get_messages();
                     SimpleShell.prettyPrint(results);
                     continue;
                 }
+
+                //messagesforID: messages foruserID
+                if(list.contains("messages") && list.size() == 2) {
+                    MessageController msg = new MessageController();
+                    ArrayList<Message> results;
+                    results = msg.getMessagesForId((new Id(" ", list.get(1))));
+                    SimpleShell.prettyPrint(results.toString());
+                    continue;
+                }
+
+                //sequence: messages userID seq seq#
+                //messagesFromFriend: messages myId to FriendId
+
+                if(list.contains("messages") && list.size() > 2) {
+                    MessageController msg = new MessageController();
+                    ArrayList<Message> results;
+                    if (list.get(2).equals("seq")) {
+                        Id myId = new Id("", list.get(1));
+                        Message res = msg.getMessageForSequence(list.get(3), myId);
+                        SimpleShell.prettyPrint(res.toString());
+                        continue;
+                    }
+                    results = msg.getMessagesFromFriend((new Id(" ", list.get(1))), new Id("", list.get(list.size()-1)));
+                    SimpleShell.prettyPrint(results.toString());
+                    continue;
+                }
+
+                if(list.get(0).equals("send")) {
+                    MessageController msg = new MessageController();
+                    Id myId = new Id("", list.get(1));
+                    Id fromID = new Id("", list.get(list.size()-1));
+                    Message ms = new Message(msgList.get(1), list.get(1), list.get(list.size()-1));
+
+                    if (msgList.size() == 2) {
+                        fromID.setGithub("");
+                        ms.setFromId("");
+                    }
+                    Message result = msg.postMessage(myId, fromID, ms);
+                    SimpleShell.prettyPrint(result.toString());
+                    continue;
+                }
+
                 // you need to add a bunch more.
 
                 //!! command returns the last command in history

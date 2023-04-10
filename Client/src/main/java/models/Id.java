@@ -1,6 +1,6 @@
 package models;
 
-/* 
+/*
  * POJO for an Id object
  */
 public class Id {
@@ -8,9 +8,8 @@ public class Id {
     private String name = "";
     private String github = "";
 
-    public Id (String userId,String name, String github) {
+    public Id (String name, String github) {
         // assign these field???
-        this.userId = userId;
         this.name = name;
         this.github = github;
     }
